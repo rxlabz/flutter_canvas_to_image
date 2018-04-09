@@ -55,7 +55,7 @@ class _ImageGeneratorState extends State<ImageGenerator> {
                   width: kCanvasSize,
                   height: kCanvasSize,
                 ))
-              : new Container(width: 100.0, height: 100.0, color: Colors.grey)
+              : new Container()
         ],
       ),
     );
