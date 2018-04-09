@@ -9,14 +9,14 @@ final recorder = new ui.PictureRecorder();
 final canvas = new Canvas(
     recorder,
     new Rect.fromPoints(
-        new Offset(0.0, 0.0), new Offset(kCanvasSize, kCanvasSize)));
+        new Offset(0.0, 0.0), new Offset(200.0, 200.0)));
 
 final stroke = new Paint()
   ..color = Colors.grey
   ..style = PaintingStyle.stroke;
 
 canvas.drawRect(
-    new Rect.fromLTWH(0.0, 0.0, kCanvasSize, kCanvasSize), stroke);
+    new Rect.fromLTWH(0.0, 0.0, 200.0, 200.0), stroke);
 
 final paint = new Paint()
   ..color = color
@@ -24,8 +24,8 @@ final paint = new Paint()
 
 canvas.drawCircle(
     new Offset(
-      widget.rd.nextDouble() * kCanvasSize,
-      widget.rd.nextDouble() * kCanvasSize,
+      widget.rd.nextDouble() * 200.0,
+      widget.rd.nextDouble() * 200.0,
     ),
     20.0,
     paint);
