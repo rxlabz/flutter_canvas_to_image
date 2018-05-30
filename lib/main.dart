@@ -91,7 +91,7 @@ class _ImageGeneratorState extends State<ImageGenerator> {
 
     final picture = recorder.endRecording();
     final img = picture.toImage(200, 200);
-    final pngBytes = await img.toByteData(format: new ui.EncodingFormat.png());
+    final pngBytes = await img.toByteData(format: new ui.ImageByteFormat.png());
 
     setState(() {
       imgBytes = pngBytes;
