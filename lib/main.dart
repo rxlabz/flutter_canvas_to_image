@@ -1,19 +1,20 @@
 import 'dart:math';
 import 'dart:typed_data';
 import 'dart:ui' as ui;
+import 'dart:ui';
 
 import 'package:flutter/material.dart';
 
-void main() => runApp(new App());
+void main() => runApp(App());
 
 const kCanvasSize = 200.0;
 
 class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return new MaterialApp(
-      home: new Scaffold(
-        body: new ImageGenerator(),
+    return MaterialApp(
+      home: Scaffold(
+        body: ImageGenerator(),
       ),
       debugShowCheckedModeBanner: false,
     );
@@ -25,11 +26,11 @@ class ImageGenerator extends StatefulWidget {
   final int numColors;
 
   ImageGenerator()
-      : rd = new Random(),
+      : rd = Random(),
         numColors = Colors.primaries.length;
 
   @override
-  _ImageGeneratorState createState() => new _ImageGeneratorState();
+  _ImageGeneratorState createState() => _ImageGeneratorState();
 }
 
 class _ImageGeneratorState extends State<ImageGenerator> {
@@ -37,25 +38,25 @@ class _ImageGeneratorState extends State<ImageGenerator> {
 
   @override
   Widget build(BuildContext context) {
-    return new Center(
-      child: new Column(
+    return Center(
+      child: Column(
         mainAxisSize: MainAxisSize.max,
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
-          new Padding(
+          Padding(
             padding: const EdgeInsets.all(12.0),
-            child: new RaisedButton(
-                child: new Text('Generate image'), onPressed: generateImage),
+            child: RaisedButton(
+                child: Text('Generate image'), onPressed: generateImage),
           ),
           imgBytes != null
-              ? new Center(
-                  child: new Image.memory(
-                  new Uint8List.view(imgBytes.buffer),
+              ? Center(
+                  child: Image.memory(
+                  Uint8List.view(imgBytes.buffer),
                   width: kCanvasSize,
                   height: kCanvasSize,
                 ))
-              : new Container()
+              : Container()
         ],
       ),
     );
@@ -64,25 +65,22 @@ class _ImageGeneratorState extends State<ImageGenerator> {
   void generateImage() async {
     final color = Colors.primaries[widget.rd.nextInt(widget.numColors)];
 
-    final recorder = new ui.PictureRecorder();
-    final canvas = new Canvas(
-        recorder,
-        new Rect.fromPoints(
-            new Offset(0.0, 0.0), new Offset(kCanvasSize, kCanvasSize)));
+    final recorder = ui.PictureRecorder();
+    final canvas = Canvas(recorder,
+        Rect.fromPoints(Offset(0.0, 0.0), Offset(kCanvasSize, kCanvasSize)));
 
-    final stroke = new Paint()
+    final stroke = Paint()
       ..color = Colors.grey
       ..style = PaintingStyle.stroke;
 
-    canvas.drawRect(
-        new Rect.fromLTWH(0.0, 0.0, kCanvasSize, kCanvasSize), stroke);
+    canvas.drawRect(Rect.fromLTWH(0.0, 0.0, kCanvasSize, kCanvasSize), stroke);
 
-    final paint = new Paint()
+    final paint = Paint()
       ..color = color
       ..style = PaintingStyle.fill;
 
     canvas.drawCircle(
-        new Offset(
+        Offset(
           widget.rd.nextDouble() * kCanvasSize,
           widget.rd.nextDouble() * kCanvasSize,
         ),
@@ -90,8 +88,8 @@ class _ImageGeneratorState extends State<ImageGenerator> {
         paint);
 
     final picture = recorder.endRecording();
-    final img = picture.toImage(200, 200);
-    final pngBytes = await img.toByteData(format: new ui.ImageByteFormat.png());
+    final img = await picture.toImage(200, 200);
+    final pngBytes = await img.toByteData(format: ImageByteFormat.png);
 
     setState(() {
       imgBytes = pngBytes;
